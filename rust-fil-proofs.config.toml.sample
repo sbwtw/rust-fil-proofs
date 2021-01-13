@@ -33,3 +33,5 @@ rows_to_discard = 2
 
 # This enables multicore SDR replication
 use_multicore_sdr = false
+
+multicore_sdr_bind_coregroups_range = { start = 0, end = 7 }

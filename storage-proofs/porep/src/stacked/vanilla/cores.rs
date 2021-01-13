@@ -27,7 +27,12 @@ pub struct CoreIndex(usize);
 pub fn checkout_core_group() -> Option<MutexGuard<'static, CoreGroup>> {
     match &*CORE_GROUPS {
         Some(groups) => {
-            for (i, group) in groups.iter().enumerate() {
+            let settings = &settings::SETTINGS;
+            let mut cg: &[Mutex<CoreGroup>] = groups;
+            if let Some(rng) = &settings.multicore_sdr_bind_coregroups_range {
+                cg = &groups[rng.to_owned()];
+            }
+            for (i, group) in cg.iter().enumerate() {
                 match group.try_lock() {
                     Ok(guard) => {
                         debug!("checked out core group {}", i);

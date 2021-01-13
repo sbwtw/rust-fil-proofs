@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, ops::RangeInclusive};
 
 use config::{Config, ConfigError, Environment, File};
 use lazy_static::lazy_static;
@@ -27,6 +27,7 @@ pub struct Settings {
     pub parameter_cache: String,
     pub parent_cache: String,
     pub use_multicore_sdr: bool,
+    pub multicore_sdr_bind_coregroups_range: Option<RangeInclusive<usize>>,
     pub multicore_sdr_producers: usize,
     pub multicore_sdr_producer_stride: u64,
     pub multicore_sdr_lookahead: usize,
@@ -51,6 +52,7 @@ impl Default for Settings {
             parameter_cache: "/var/tmp/filecoin-proof-parameters/".to_string(),
             parent_cache: cache("filecoin-parents"),
             use_multicore_sdr: false,
+            multicore_sdr_bind_coregroups_range: None,
             multicore_sdr_producers: 3,
             multicore_sdr_producer_stride: 128,
             multicore_sdr_lookahead: 800,
