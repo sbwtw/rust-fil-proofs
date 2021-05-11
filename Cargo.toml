@@ -1,11 +1,11 @@
 [workspace]
 
 members = [
-  #"filecoin-proofs",
+#  "filecoin-proofs",
   "storage-proofs",
   "storage-proofs/core",
   "storage-proofs/porep",
   "storage-proofs/post",
-  #"fil-proofs-tooling",
+#  "fil-proofs-tooling",
   "sha2raw"
 ]
