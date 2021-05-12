@@ -186,6 +186,8 @@ fn core_groups(cores_per_unit: usize) -> Option<Vec<Mutex<Vec<CoreIndex>>>> {
         })
         .collect::<Vec<_>>();
 
+    debug!("core_groups: {:?}", core_groups);
+
     Some(
         core_groups
             .iter()
