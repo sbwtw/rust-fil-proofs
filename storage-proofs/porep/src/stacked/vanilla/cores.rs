@@ -174,8 +174,8 @@ fn core_groups(cores_per_unit: usize) -> Option<Vec<Mutex<Vec<CoreIndex>>>> {
         );
     }
 
-    let core_count = 64;
-    let group_size = 4;
+    let core_count = 32;
+    let group_size = 3;
     let group_count = core_count / group_size;
     let core_groups = (0..group_count)
         .map(|i| {
