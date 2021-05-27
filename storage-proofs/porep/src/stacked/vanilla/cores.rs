@@ -174,20 +174,27 @@ fn core_groups(cores_per_unit: usize) -> Option<Vec<Mutex<Vec<CoreIndex>>>> {
         );
     }
 
-    let core_count = 32;
-    let group_size = 3;
-    let group_count = core_count / group_size;
-    let core_groups = (0..group_count)
-        .map(|i| {
-            (0..group_size)
-                .map(|j| {
-                    let core_index = i * group_size + j;
-                    assert!(core_index < core_count);
-                    CoreIndex(core_index)
-                })
-                .collect::<Vec<_>>()
-        })
-        .collect::<Vec<_>>();
+    // let core_count = 32;
+    // let group_size = 3;
+    // let group_count = core_count / group_size;
+    // let core_groups = (0..group_count)
+    //     .map(|i| {
+    //         (0..group_size)
+    //             .map(|j| {
+    //                 let core_index = i * group_size + j;
+    //                 assert!(core_index < core_count);
+    //                 CoreIndex(core_index)
+    //             })
+    //             .collect::<Vec<_>>()
+    //     })
+    //     .collect::<Vec<_>>();
+
+    let group_size: usize = std::env::var("FIL_MULTICORE_GROUP_SIZE").unwrap().trim().parse().unwrap();
+    let group_count: usize = std::env::var("FIL_MULTICORE_GROUP_COUNT").unwrap().trim().parse().unwrap();
+    let group_start: usize = std::env::var("FIL_MULTICORE_GROUP_START").unwrap().trim().parse().unwrap();
+
+    let groups: Vec<_> = (0..group_count).map(|x| vec![CoreIndex(group_start + x), CoreIndex(group_start + x + group_size)]).collect();
+    let core_groups = groups;
 
     debug!("core_groups: {:?}", core_groups);
 
